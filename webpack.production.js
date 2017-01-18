@@ -1,4 +1,5 @@
-
+var webpack = require('webpack');
+var path = require('path');
 var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 var libraryName = 'domshaper';
@@ -12,7 +13,7 @@ var config = {
   entry: __dirname + '/src/index.js',
   devtool: 'source-map',
   output: {
-    path: __dirname + '/lib',
+    path: __dirname + '/bin',
     filename: outputFile,
     library: libraryName,
     libraryTarget: 'umd',
