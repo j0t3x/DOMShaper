@@ -1,0 +1,42 @@
+{
+  "name": "domshaper",
+  "version": "1.0.0",
+  "description": "lib to build dynamic dom",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config ./webpack.production.js",
+    "dev": "...",
+    "start": "webpack --progress --colors --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/j0t3x/DOMShaper.git"
+  },
+  "author": [
+    {
+      "name": "t3x",
+      "email": "tex@munera.io",
+      "url": "https://t3x.me"
+    },
+    {
+      "name": "renato",
+      "email": "rhermoza145@gmail.com",
+      "url": "https://github.com/renato145"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/j0t3x/DOMShaper/issues"
+  },
+  "homepage": "https://github.com/j0t3x/DOMShaper#readme",
+  "devDependencies": {
+    "eslint": "^3.13.1",
+    "eslint-loader": "^1.6.1",
+    "esprima": "^3.1.3",
+    "webpack": "^1.14.0"
+  }
+}
