@@ -1,4 +1,4 @@
-var Shape = require('./Shape.js').Shape;
+var Shape = require('./Shape.js');
 
 var TextShape = function( elem, id ){
   Shape.call( this, elem, id );
@@ -27,14 +27,14 @@ TextShape.prototype.buildDom = function(){
 
 //t is a string with the text for the textShape
 TextShape.prototype.updateText = function( textContent ){
-    
+
     this.needsReRender = true;
-    
+
     if( typeof textContent !== 'string' )
       throw ': argument of updateText should be a string literal';
 
     this.textContent = textContent;
-    
+
 };
 
 TextShape.prototype.render_ = function(){
@@ -45,4 +45,4 @@ TextShape.prototype.render_ = function(){
 };
 
 
-exports.TextShape = TextShape;
+module.exports = TextShape;

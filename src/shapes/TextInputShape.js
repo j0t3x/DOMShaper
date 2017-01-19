@@ -1,4 +1,4 @@
-var Shape = require('./Shape.js').Shape;
+var Shape = require('./Shape.js');
 
 var TextInputShape = function( id ){
   Shape.call( this, 'input', id );
@@ -43,11 +43,11 @@ TextInputShape.prototype.setValue = function( value ){
 };
 
 TextInputShape.prototype.render_ = function(){
-  
+
   if( this.textContent )
     this.domElement.value = this.textContent;
 
 };
 
 
-exports.TextInputShape = TextInputShape;
+module.exports = TextInputShape;

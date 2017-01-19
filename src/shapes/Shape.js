@@ -6,10 +6,10 @@ var Shape = function( elem, id ){
   this.classes = '';
   this.parent;
   this.needsRender = true;
-  
+
   //fo the eventa
   this.eventAndCallback = {};
-  
+
 
   if( !elem ){
     throw 'Element should be a DOM node or a string literal';
@@ -61,39 +61,39 @@ Shape.prototype.buildDom = function(){
     if( !this.childs[i].domElement ){
       this.childs[i].buildDom();
     }
-  
-    
+
+
     this.domElement.appendChild( this.childs[i].domElement );
 
   }
-  
+
   for( var ev in this.eventAndCallback ){
-    
+
     this.domElement.addEventListener( ev, this.eventAndCallback[ev] );
-    
+
   }
 
 };
 
 Shape.prototype.render = function(){
-  
+
   if( !this.needsRender ){
     this.render_();
   }
-  
+
   if( this.childs ){
     for (var i = 0; i < this.childs.length; i++) {
       //render all childs shit
       this.childs[i].render();
     }
   }
-  
+
   this.needsRender = false;
-  
+
 };
 
 Shape.prototype.render_ = function(){
-  
+
 };
 
 //event listener
@@ -103,9 +103,9 @@ Shape.prototype.on = function( event, callback ){
   if( typeof event !== 'string' ){
     throw 'use string identifiers for events';
   }
-  
+
   this.eventAndCallback[event] = callback;
-  
+
 };
 
 Shape.prototype.removeAllChilds = function(){
@@ -149,12 +149,12 @@ Shape.prototype.removeShape = function( childShape ){
 Shape.prototype.setClass = function(){
 
   //you can set several classes like this 'clas1 class2 class3'
-  
+
   for ( var i = 0; i < arguments.length ; i++ ) {
 
     if( typeof arguments[i] !== 'string' )
       throw ': className should be a string literal';
-  
+
     this.classes += ( ' ' + arguments[i] );
   }
   //this.classes = classes;
@@ -174,4 +174,4 @@ Shape.prototype.setId = function( id ){
 
 };
 
-exports.Shape = Shape;
+module.exports = Shape;

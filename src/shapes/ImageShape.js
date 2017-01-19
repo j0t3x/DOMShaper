@@ -1,4 +1,4 @@
-var Shape = require('./Shape.js').Shape;
+var Shape = require('./Shape.js');
 
 var ImageShape = function( src, id ){
   Shape.call( this, 'img', id );
@@ -33,11 +33,11 @@ ImageShape.prototype.buildDom = function(){
 
   if( this.classes )
     this.domElement.className += ' ' + this.classes;
-    
+
   if( this.width )
     this.domElement.width = this.width;
-    
-    
+
+
   if( this.height )
     this.domElement.height = this.height;
 
@@ -77,4 +77,4 @@ ImageShape.prototype.setWHpx = function( w, h ){
 
 };
 
-exports.ImageShape = ImageShape;
+module.exports = ImageShape;
