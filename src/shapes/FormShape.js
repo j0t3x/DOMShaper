@@ -10,7 +10,7 @@ var FormShape = function( action, id ){
   this.method = '';
   this.encoding = '';
   this.submitTrigger;
-  this.data; //remember this could be a file
+  this.data = {}; //remember this could be a file
 
 };
 /*OOP herency*/
@@ -109,6 +109,7 @@ FormShape.prototype.sendData = function( evt ){
 
   evt.preventDefault();
   //TODO: lib that structure requests for our framework :)
+  
 
 };
 
@@ -121,12 +122,12 @@ FormShape.prototype.serializeForm = function(){
 
 FormShape.prototype.serializeElement = function( theShape ){
 
-  for( var i = 0; i < theShape.length; ++i ) {
+  for( var i = 0; i < theShape.childs.length; ++i ) {
 
     var name;
     var value;
 
-    var element = theShape[i];
+    var element = theShape.childs[i];
 
     if( element instanceof TextInputShape ){
       name = element.id;
@@ -142,8 +143,8 @@ FormShape.prototype.serializeElement = function( theShape ){
        this.data[ name ] = value;
     }
 
-    if( theShape.childs.length > 0 ){
-      this.serializeElement( theShape[i] );
+    if( element.childs.length > 0 ){
+      this.serializeElement( element );
     }
 
   }
