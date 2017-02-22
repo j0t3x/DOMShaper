@@ -6,6 +6,7 @@ var Shape = function( elem, id ){
   this.classes = '';
   this.parent;
   this.needsRender = true;
+  this.attributes = {};
 
   //fo the eventa
   this.eventAndCallback = {};
@@ -57,6 +58,10 @@ Shape.prototype.buildDom = function(){
   if( this.classes )
     this.domElement.className += ' ' + this.classes;
 
+  for( var attr in this.attributes){
+    this.domElement.setAttribute(attr,this.attributes[attr]);
+  }
+
   for (var i = 0; i < this.childs.length; i++) {
 
     if( !this.childs[i].domElement ){
@@ -73,6 +78,7 @@ Shape.prototype.buildDom = function(){
     this.domElement.addEventListener( ev, this.eventAndCallback[ev] );
 
   }
+
 
 };
 
@@ -174,5 +180,19 @@ Shape.prototype.setId = function( id ){
     this.domElement.id = this.id;
 
 };
+
+Shape.prototype.addAttr = function( name , value ){
+
+  //you can set several classes like this 'clas1 class2 class3'
+  if( typeof name !== 'string' )
+    throw ': name should be a string literal';
+
+  if( !value || (typeof value !== 'string' && typeof value !== 'number') )
+    throw ': value shouldnt be empty, use number or string';
+
+  this.attributes[name] = value;
+
+};
+
 
 module.exports = Shape;

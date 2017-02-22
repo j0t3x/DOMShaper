@@ -3,6 +3,7 @@ var Shape = require('./Shape.js');
 var TextInputShape = function( id ){
   Shape.call( this, 'input', id );
   this.textContent = '';
+  this.name = '';
 };
 /*OOP herency*/
 TextInputShape.prototype = Object.create( Shape.prototype );
@@ -23,6 +24,12 @@ TextInputShape.prototype.buildDom = function(){
   if( this.classes )
     this.domElement.className += ' ' + this.classes;
 
+  if( this.name )
+      this.domElement.setAttribute('name', this.name);
+
+  for( var attr in this.attributes){
+    this.domElement.setAttribute(attr,this.attributes[attr]);
+  }
 
 };
 
@@ -49,5 +56,18 @@ TextInputShape.prototype.render_ = function(){
 
 };
 
+TextInputShape.prototype.setName = function(){
+
+  //you can set several classes like this 'clas1 class2 class3'
+
+  for ( var i = 0; i < arguments.length ; i++ ) {
+
+    if( typeof arguments[i] !== 'string' )
+      throw ': Name should be a string literal';
+
+    this.name = arguments[i];
+  }
+
+};
 
 module.exports = TextInputShape;

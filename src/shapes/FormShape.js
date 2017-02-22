@@ -42,6 +42,20 @@ FormShape.prototype.buildDom = function(){
     throw 'You need a submit trigger for a form';
   }
 
+
+  if(this.submitTrigger)
+    this.appendShape( this.submitTrigger );
+
+  for (var i = 0; i < this.childs.length; i++) {
+
+    if( !this.childs[i].domElement ){
+      this.childs[i].buildDom();
+    }
+
+    this.domElement.appendChild( this.childs[i].domElement );
+
+  }
+  
   //make submitTrigger button visible or invisible according to the flag setted at creation
   if( !this.submitTrigger.visible )
     this.submitTrigger.domElement.style.visibility = "hidden";
@@ -100,8 +114,7 @@ FormShape.prototype.setSubmitTrigger = function( text ){
   }
 
   this.submitTrigger = st;
-  this.appendShape( this.submitTrigger );
-
+  
   return st;
 };
 
@@ -132,13 +145,13 @@ FormShape.prototype.serializeElement = function( theShape ){
     if( element instanceof TextInputShape ){
       name = element.id;
       value = element.getVal();
+
     }else if ( element instanceof OptionShape ) {
       name = element.id;
       value = element.getSelectedOptions();
     }else{
-      continue;
+      //continue;
     }
-
     if( name ) {
        this.data[ name ] = value;
     }
