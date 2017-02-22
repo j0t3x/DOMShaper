@@ -40,7 +40,8 @@ Shape.prototype.appendShape = function( shapeToAppend ){
     this.childs.push( childShape );
 
   }else{
-    throw 'only shape or string as arguments, gtfo';
+    console.err('only shape or string as arguments, gtfo');
+    //we dont want to stop the main thread for this misuse
   }
 
 };
