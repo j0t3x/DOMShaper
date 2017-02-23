@@ -4,7 +4,7 @@ var OptionShape = function( name, type ){
 
   Shape.call( this, 'div', name );
   if( typeof type !== 'string' )
-      throw 'indicate wether this is a radio or check group of options with a string';
+      console.error('indicate wether this is a radio or check group of options with a string');
 
   this.type = '';
   //setting input type, dom style
@@ -28,7 +28,7 @@ OptionShape.prototype.contructor = OptionShape;
 OptionShape.prototype.addOption = function( displayText, value, classForName, classForInput ){
 
      if( !displayText || !value )
-          throw 'you should add an option with display and value arguments...';
+          console.error('you should add an option with display and value arguments...');
 
      this.structure.push({
           display: displayText,

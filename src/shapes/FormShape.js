@@ -39,7 +39,7 @@ FormShape.prototype.buildDom = function(){
     this.domElement.enctype = this.encoding;
 
   if( !this.submitTrigger ){
-    throw 'You need a submit trigger for a form';
+    console.error('You need a submit trigger for a form');
   }
 
 
@@ -96,7 +96,7 @@ FormShape.prototype.addSection = function( childSection ){
     console.log( this.childs );
 
   }else{
-    throw 'The argument should be a Shape object';
+    console.error('The argument should be a Shape object');
   }
 
 };
@@ -104,7 +104,7 @@ FormShape.prototype.addSection = function( childSection ){
 FormShape.prototype.setSubmitTrigger = function( text ){
   //un trigger puede ser un boton, como puede ser un TECLA
   if( typeof text !== 'string' )
-    throw 'Argument should be a string containing text of submit button, if no text submit will be not visible';
+    console.error('Argument should be a string containing text of submit button, if no text submit will be not visible');
 
   var st;
   if ( text !== '' ) {

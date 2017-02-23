@@ -36,7 +36,7 @@ TextInputShape.prototype.buildDom = function(){
 //t is a string with the text for the TextInputShape
 TextInputShape.prototype.getVal = function(){
     if( !this.domElement )
-      throw ': first build object DOM ->  buildDom()';
+      console.error(': first build object DOM ->  buildDom()');
 
     return this.domElement.value;
 };
@@ -44,7 +44,7 @@ TextInputShape.prototype.getVal = function(){
 //t is a string with the text for the TextInputShape
 TextInputShape.prototype.setValue = function( value ){
     if( typeof value !== 'string' )
-      throw ': argument of updateText should be a string literal';
+      console.error(': argument of updateText should be a string literal');
 
     this.textContent = value;
 };
@@ -63,7 +63,7 @@ TextInputShape.prototype.setName = function(){
   for ( var i = 0; i < arguments.length ; i++ ) {
 
     if( typeof arguments[i] !== 'string' )
-      throw ': Name should be a string literal';
+      console.error(': Name should be a string literal');
 
     this.name = arguments[i];
   }

@@ -13,7 +13,7 @@ var Shape = function( elem, id ){
 
 
   if( !elem ){
-    throw 'Element should be a DOM node or a string literal';
+    console.error('Element should be a DOM node or a string literal');
   }
 
   if( typeof elem === 'string' ){
@@ -41,7 +41,7 @@ Shape.prototype.appendShape = function( shapeToAppend ){
     this.childs.push( childShape );
 
   }else{
-    console.err('only shape or string as arguments, gtfo');
+    console.error('only shape or string as arguments, gtfo');
     //we dont want to stop the main thread for this misuse
   }
 
@@ -108,7 +108,7 @@ Shape.prototype.render_ = function(){
 Shape.prototype.on = function( event, callback ){
   //all listener here? maybe :)
   if( typeof event !== 'string' ){
-    throw 'use string identifiers for events';
+    console.error('use string identifiers for events');
   }
 
   this.eventAndCallback[event] = callback;
@@ -142,7 +142,7 @@ Shape.prototype.removeShape = function( childShape ){
     }
 
   }else{
-    throw ': argument should be a Shape object';
+    console.error(': argument should be a Shape object');
   }
 
   //remove interface
@@ -160,7 +160,7 @@ Shape.prototype.setClass = function(){
   for ( var i = 0; i < arguments.length ; i++ ) {
 
     if( typeof arguments[i] !== 'string' )
-      throw ': className should be a string literal';
+      console.error(': className should be a string literal');
 
     this.classes += ( ' ' + arguments[i] );
   }
@@ -172,7 +172,7 @@ Shape.prototype.setId = function( id ){
 
   //you can set several classes like this 'clas1 class2 class3'
   if( typeof id !== 'string' )
-    throw ': id should be a string literal';
+    console.error(': id should be a string literal');
 
   this.id = id;
 
@@ -185,10 +185,10 @@ Shape.prototype.addAttr = function( name , value ){
 
   //you can set several classes like this 'clas1 class2 class3'
   if( typeof name !== 'string' )
-    throw ': name should be a string literal';
+    console.error(': name should be a string literal');
 
   if( !value || (typeof value !== 'string' && typeof value !== 'number') )
-    throw ': value shouldnt be empty, use number or string';
+    console.error(': value shouldnt be empty, use number or string');
 
   this.attributes[name] = value;
 

@@ -38,7 +38,7 @@ ButtonShape.prototype.buildDom = function(){
 //t is a string with the text for the ButtonShape
 ButtonShape.prototype.updateText = function( text ){
     if( typeof text !== 'string' )
-      throw ': argument of updateText should be a string literal';
+      console.error(': argument of updateText should be a string literal');
 
     this.textContent = text;
 };

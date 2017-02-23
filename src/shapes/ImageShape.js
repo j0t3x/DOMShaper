@@ -4,12 +4,12 @@ var ImageShape = function( src, id ){
   Shape.call( this, 'img', id );
 
   if( typeof src !== 'string' )
-    throw ': image src should be a string literal';
+    console.error(': image src should be a string literal');
 
   if( src ){
     this.src = src;
   }else{
-    throw ': 3rd input shouldnt be null';
+    console.error(': 3rd input shouldnt be null');
   }
 
   this.width;
@@ -59,7 +59,7 @@ ImageShape.prototype.render_ = function(){
 ImageShape.prototype.changeImage = function( src ){
 
   if( typeof src !== 'string' )
-    throw ': image src should be a string literal';
+    console.error(': image src should be a string literal');
 
   this.src = src;
 

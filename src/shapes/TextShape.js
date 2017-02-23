@@ -31,7 +31,7 @@ TextShape.prototype.updateText = function( textContent ){
     this.needsReRender = true;
 
     if( typeof textContent !== 'string' )
-      throw ': argument of updateText should be a string literal';
+      console.error(': argument of updateText should be a string literal');
 
     this.textContent = textContent;
 
