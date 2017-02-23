@@ -22,6 +22,17 @@ TextShape.prototype.buildDom = function(){
   if( this.classes )
     this.domElement.className += ' ' + this.classes;
 
+  for (var i = 0; i < this.childs.length; i++) {
+
+    if( !this.childs[i].domElement ){
+      this.childs[i].buildDom();
+    }
+
+
+    this.domElement.appendChild( this.childs[i].domElement );
+
+  }
+
 
 };
 
