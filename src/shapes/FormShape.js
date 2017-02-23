@@ -3,10 +3,10 @@ var TextInputShape = require('./TextInputShape.js');
 var ButtonShape = require('./ButtonShape.js');
 var OptionShape = require('./OptionShape.js');
 
-var FormShape = function( action, id ){
+var FormShape = function( id ){
   Shape.call( this, 'form', id );
 
-  this.action = action;
+  //this.action = action;
   this.method = '';
   this.encoding = '';
   this.submitTrigger;
@@ -55,12 +55,14 @@ FormShape.prototype.buildDom = function(){
     this.domElement.appendChild( this.childs[i].domElement );
 
   }
-  
+
   //make submitTrigger button visible or invisible according to the flag setted at creation
   if( !this.submitTrigger.visible )
     this.submitTrigger.domElement.style.visibility = "hidden";
-  //inject our submit code
-  this.submitTrigger.on( 'click', this.sendData.bind(this) );
+
+  for( var ev in this.eventAndCallback ){
+    this.domElement.addEventListener( ev, this.eventAndCallback[ev] );
+  }
 
 };
 
@@ -114,7 +116,7 @@ FormShape.prototype.setSubmitTrigger = function( text ){
   }
 
   this.submitTrigger = st;
-  
+
   return st;
 };
 
@@ -122,7 +124,7 @@ FormShape.prototype.sendData = function( evt ){
 
   evt.preventDefault();
   //TODO: lib that structure requests for our framework :)
-  
+
 
 };
 

@@ -22,6 +22,16 @@ ButtonShape.prototype.buildDom = function(){
   if( this.classes )
     this.domElement.className += ' ' + this.classes;
 
+  for( var attr in this.attributes ){
+    this.domElement.setAttribute(attr,this.attributes[attr]);
+  }
+
+  for( var ev in this.eventAndCallback ){
+
+    this.domElement.addEventListener( ev, this.eventAndCallback[ev] );
+
+  }
+
 
 };
 

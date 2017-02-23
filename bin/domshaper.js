@@ -118,7 +118,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.childs.push( childShape );
 	
 	  }else{
-	    throw 'only shape or string as arguments, gtfo';
+	    console.err('only shape or string as arguments, gtfo');
+	    //we dont want to stop the main thread for this misuse
 	  }
 	
 	};
@@ -302,6 +303,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if( this.classes )
 	    this.domElement.className += ' ' + this.classes;
 	
+	  for( var attr in this.attributes ){
+	    this.domElement.setAttribute(attr,this.attributes[attr]);
+	  }
+	
+	  for( var ev in this.eventAndCallback ){
+	
+	    this.domElement.addEventListener( ev, this.eventAndCallback[ev] );
+	
+	  }
+	
 	
 	};
 	
@@ -333,21 +344,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var OptionShape = function( name, type ){
 	
-	     if( typeof type !== 'string' )
-	          throw 'indicate wether this is a radio or check group of options with a string';
+	  Shape.call( this, 'div', name );
+	  if( typeof type !== 'string' )
+	      throw 'indicate wether this is a radio or check group of options with a string';
 	
-	     this.type = '';
-	     //setting input type, dom style
-	     if( type === 'radio' )
-	          this.type = 'radio';
-	     else if( type === 'check' )
-	          this.type = 'checkbox';
+	  this.type = '';
+	  //setting input type, dom style
+	  if( type === 'radio' )
+	      this.type = 'radio';
+	  else if( type === 'check' )
+	      this.type = 'checkbox';
 	
-	     this.groupName = name;
-	     this.structure = [];
-	     this.domElements = [];
-	     this.domElement;
-	     this.changedOptionsValues = [];
+	  this.groupName = name;
+	  this.structure = [];
+	  this.domElements = [];
+	  this.domElement;
+	  this.changedOptionsValues = [];
 	
 	};
 	/*OOP herency*/
@@ -675,10 +687,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var ButtonShape = __webpack_require__(2);
 	var OptionShape = __webpack_require__(3);
 	
-	var FormShape = function( action, id ){
+	var FormShape = function( id ){
 	  Shape.call( this, 'form', id );
 	
-	  this.action = action;
+	  //this.action = action;
 	  this.method = '';
 	  this.encoding = '';
 	  this.submitTrigger;
@@ -727,12 +739,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.domElement.appendChild( this.childs[i].domElement );
 	
 	  }
-	  
+	
 	  //make submitTrigger button visible or invisible according to the flag setted at creation
 	  if( !this.submitTrigger.visible )
 	    this.submitTrigger.domElement.style.visibility = "hidden";
-	  //inject our submit code
-	  this.submitTrigger.on( 'click', this.sendData.bind(this) );
+	
+	  for( var ev in this.eventAndCallback ){
+	    this.domElement.addEventListener( ev, this.eventAndCallback[ev] );
+	  }
 	
 	};
 	
@@ -786,7 +800,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	
 	  this.submitTrigger = st;
-	  
+	
 	  return st;
 	};
 	
@@ -794,7 +808,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  evt.preventDefault();
 	  //TODO: lib that structure requests for our framework :)
-	  
+	
 	
 	};
 	

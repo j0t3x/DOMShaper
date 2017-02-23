@@ -2,21 +2,22 @@ var Shape = require('./Shape.js');
 
 var OptionShape = function( name, type ){
 
-     if( typeof type !== 'string' )
-          throw 'indicate wether this is a radio or check group of options with a string';
+  Shape.call( this, 'div', name );
+  if( typeof type !== 'string' )
+      throw 'indicate wether this is a radio or check group of options with a string';
 
-     this.type = '';
-     //setting input type, dom style
-     if( type === 'radio' )
-          this.type = 'radio';
-     else if( type === 'check' )
-          this.type = 'checkbox';
+  this.type = '';
+  //setting input type, dom style
+  if( type === 'radio' )
+      this.type = 'radio';
+  else if( type === 'check' )
+      this.type = 'checkbox';
 
-     this.groupName = name;
-     this.structure = [];
-     this.domElements = [];
-     this.domElement;
-     this.changedOptionsValues = [];
+  this.groupName = name;
+  this.structure = [];
+  this.domElements = [];
+  this.domElement;
+  this.changedOptionsValues = [];
 
 };
 /*OOP herency*/
