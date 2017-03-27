@@ -28,19 +28,17 @@ ImageShape.prototype.buildDom = function(){
 
   this.domElement.src = this.src;
 
-  if( this.id )
-    this.domElement.id = this.id;
-
-  if( this.classes )
-    this.domElement.className += ' ' + this.classes;
+  this.buildId();
+  this.buildClasses();
+  this.buildAttributes();
+  this.buildEvents();
+  //this.buildChilds();
 
   if( this.width )
     this.domElement.width = this.width;
 
-
   if( this.height )
     this.domElement.height = this.height;
-
 
 };
 
@@ -62,7 +60,7 @@ ImageShape.prototype.changeImage = function( src ){
     console.error(': image src should be a string literal');
 
   this.src = src;
-
+  this.needsRender = true;
 };
 
 ImageShape.prototype.setWHpx = function( w, h ){
@@ -74,6 +72,8 @@ ImageShape.prototype.setWHpx = function( w, h ){
   if( h && typeof h === 'number' ){
     this.height = h;
   }
+
+  this.needsRender = true;
 
 };
 

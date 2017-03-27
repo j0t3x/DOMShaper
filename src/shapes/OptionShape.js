@@ -1,3 +1,5 @@
+//this is a bad example of  a shape, its poorly written. It builds an option group for bootstrap css, lame... i can do better
+// buuut, and this is a big but, it worked for what was intended so dont judge XD
 var Shape = require('./Shape.js');
 
 var OptionShape = function( name, type ){

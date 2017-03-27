@@ -90,7 +90,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	  if( !elem ){
-	    throw 'Element should be a DOM node or a string literal';
+	    console.error('Element should be a DOM node or a string literal');
 	  }
 	
 	  if( typeof elem === 'string' ){
@@ -118,7 +118,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.childs.push( childShape );
 	
 	  }else{
-	    console.err('only shape or string as arguments, gtfo');
+	    console.error('only shape or string as arguments, gtfo');
 	    //we dont want to stop the main thread for this misuse
 	  }
 	
@@ -129,34 +129,43 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if( this.elementName && !this.domElement )
 	    this.domElement = document.createElement( this.elementName );
 	
+	    this.buildId();
+	    this.buildClasses();
+	    this.buildAttributes();
+	    this.buildEvents();
+	    this.buildChilds();
+	
+	};
+	
+	Shape.prototype.buildId = function(){
 	  if( this.id )
 	    this.domElement.id = this.id;
+	};
 	
+	Shape.prototype.buildClasses = function(){
 	  if( this.classes )
 	    this.domElement.className += ' ' + this.classes;
+	};
 	
+	Shape.prototype.buildAttributes = function(){
 	  for( var attr in this.attributes){
 	    this.domElement.setAttribute(attr,this.attributes[attr]);
 	  }
+	};
 	
+	Shape.prototype.buildEvents = function(){
+	  for( var ev in this.eventAndCallback ){
+	    this.domElement.addEventListener( ev, this.eventAndCallback[ev] );
+	  }
+	};
+	
+	Shape.prototype.buildChilds = function(){
 	  for (var i = 0; i < this.childs.length; i++) {
-	
 	    if( !this.childs[i].domElement ){
 	      this.childs[i].buildDom();
 	    }
-	
-	
 	    this.domElement.appendChild( this.childs[i].domElement );
-	
 	  }
-	
-	  for( var ev in this.eventAndCallback ){
-	
-	    this.domElement.addEventListener( ev, this.eventAndCallback[ev] );
-	
-	  }
-	
-	
 	};
 	
 	Shape.prototype.render = function(){
@@ -185,7 +194,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Shape.prototype.on = function( event, callback ){
 	  //all listener here? maybe :)
 	  if( typeof event !== 'string' ){
-	    throw 'use string identifiers for events';
+	    console.error('use string identifiers for events');
 	  }
 	
 	  this.eventAndCallback[event] = callback;
@@ -219,7 +228,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	
 	  }else{
-	    throw ': argument should be a Shape object';
+	    console.error(': argument should be a Shape object');
 	  }
 	
 	  //remove interface
@@ -237,7 +246,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  for ( var i = 0; i < arguments.length ; i++ ) {
 	
 	    if( typeof arguments[i] !== 'string' )
-	      throw ': className should be a string literal';
+	      console.error(': className should be a string literal');
 	
 	    this.classes += ( ' ' + arguments[i] );
 	  }
@@ -249,7 +258,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  //you can set several classes like this 'clas1 class2 class3'
 	  if( typeof id !== 'string' )
-	    throw ': id should be a string literal';
+	    console.error(': id should be a string literal');
 	
 	  this.id = id;
 	
@@ -262,10 +271,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  //you can set several classes like this 'clas1 class2 class3'
 	  if( typeof name !== 'string' )
-	    throw ': name should be a string literal';
+	    console.error(': name should be a string literal');
 	
 	  if( !value || (typeof value !== 'string' && typeof value !== 'number') )
-	    throw ': value shouldnt be empty, use number or string';
+	    console.error(': value shouldnt be empty, use number or string');
 	
 	  this.attributes[name] = value;
 	
@@ -295,33 +304,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if( this.elementName && !this.domElement )
 	    this.domElement = document.createElement( this.elementName );
 	
+	  this.buildId();
+	  this.buildClasses();
+	  this.buildAttributes();
+	  this.buildEvents();
+	  //this.buildChilds();
+	
 	  this.domElement.innerHTML = this.textContent;
-	
-	  if( this.id )
-	    this.domElement.id = this.id;
-	
-	  if( this.classes )
-	    this.domElement.className += ' ' + this.classes;
-	
-	  for( var attr in this.attributes ){
-	    this.domElement.setAttribute(attr,this.attributes[attr]);
-	  }
-	
-	  for( var ev in this.eventAndCallback ){
-	
-	    this.domElement.addEventListener( ev, this.eventAndCallback[ev] );
-	
-	  }
-	
 	
 	};
 	
 	//t is a string with the text for the ButtonShape
 	ButtonShape.prototype.updateText = function( text ){
 	    if( typeof text !== 'string' )
-	      throw ': argument of updateText should be a string literal';
+	      console.error(': argument of updateText should be a string literal');
 	
 	    this.textContent = text;
+	    this.needsRender = true;
 	};
 	
 	ButtonShape.prototype.render_ = function(){
@@ -340,13 +339,15 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
+	//this is a bad example of  a shape, its poorly written. It builds an option group for bootstrap css, lame... i can do better
+	// buuut, and this is a big but, it worked for what was intended so dont judge XD
 	var Shape = __webpack_require__(1);
 	
 	var OptionShape = function( name, type ){
 	
 	  Shape.call( this, 'div', name );
 	  if( typeof type !== 'string' )
-	      throw 'indicate wether this is a radio or check group of options with a string';
+	      console.error('indicate wether this is a radio or check group of options with a string');
 	
 	  this.type = '';
 	  //setting input type, dom style
@@ -370,7 +371,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	OptionShape.prototype.addOption = function( displayText, value, classForName, classForInput ){
 	
 	     if( !displayText || !value )
-	          throw 'you should add an option with display and value arguments...';
+	          console.error('you should add an option with display and value arguments...');
 	
 	     this.structure.push({
 	          display: displayText,
@@ -469,12 +470,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  Shape.call( this, 'img', id );
 	
 	  if( typeof src !== 'string' )
-	    throw ': image src should be a string literal';
+	    console.error(': image src should be a string literal');
 	
 	  if( src ){
 	    this.src = src;
 	  }else{
-	    throw ': 3rd input shouldnt be null';
+	    console.error(': 3rd input shouldnt be null');
 	  }
 	
 	  this.width;
@@ -493,19 +494,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  this.domElement.src = this.src;
 	
-	  if( this.id )
-	    this.domElement.id = this.id;
-	
-	  if( this.classes )
-	    this.domElement.className += ' ' + this.classes;
+	  this.buildId();
+	  this.buildClasses();
+	  this.buildAttributes();
+	  this.buildEvents();
+	  //this.buildChilds();
 	
 	  if( this.width )
 	    this.domElement.width = this.width;
 	
-	
 	  if( this.height )
 	    this.domElement.height = this.height;
-	
 	
 	};
 	
@@ -524,10 +523,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	ImageShape.prototype.changeImage = function( src ){
 	
 	  if( typeof src !== 'string' )
-	    throw ': image src should be a string literal';
+	    console.error(': image src should be a string literal');
 	
 	  this.src = src;
-	
+	  this.needsRender = true;
 	};
 	
 	ImageShape.prototype.setWHpx = function( w, h ){
@@ -539,6 +538,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if( h && typeof h === 'number' ){
 	    this.height = h;
 	  }
+	
+	  this.needsRender = true;
 	
 	};
 	
@@ -569,55 +570,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this.domElement.type = 'text';
 	  this.domElement.value = this.textContent;
 	
-	  if( this.id )
-	    this.domElement.id = this.id;
-	
-	  if( this.classes )
-	    this.domElement.className += ' ' + this.classes;
-	
-	  if( this.name )
-	      this.domElement.setAttribute('name', this.name);
-	
-	  for( var attr in this.attributes){
-	    this.domElement.setAttribute(attr,this.attributes[attr]);
-	  }
+	  this.buildId();
+	  this.buildClasses();
+	  this.buildAttributes();
+	  this.buildEvents();
+	  //this.buildChilds();
 	
 	};
 	
 	//t is a string with the text for the TextInputShape
 	TextInputShape.prototype.getVal = function(){
 	    if( !this.domElement )
-	      throw ': first build object DOM ->  buildDom()';
+	      console.error(': first build object DOM ->  buildDom()');
 	
 	    return this.domElement.value;
 	};
 	
-	//t is a string with the text for the TextInputShape
+	
 	TextInputShape.prototype.setValue = function( value ){
 	    if( typeof value !== 'string' )
-	      throw ': argument of updateText should be a string literal';
+	      console.error(': argument of updateText should be a string literal');
 	
 	    this.textContent = value;
+	    this.needsRender = true;
 	};
 	
 	TextInputShape.prototype.render_ = function(){
 	
 	  if( this.textContent )
 	    this.domElement.value = this.textContent;
-	
-	};
-	
-	TextInputShape.prototype.setName = function(){
-	
-	  //you can set several classes like this 'clas1 class2 class3'
-	
-	  for ( var i = 0; i < arguments.length ; i++ ) {
-	
-	    if( typeof arguments[i] !== 'string' )
-	      throw ': Name should be a string literal';
-	
-	    this.name = arguments[i];
-	  }
 	
 	};
 	
@@ -629,52 +610,50 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	var Shape = __webpack_require__(1);
-	
-	var TextShape = function( elem, id ){
-	  Shape.call( this, elem, id );
-	  this.textContent = '';
+	var TextShape = function(elem, id) {
+	    Shape.call(this, elem, id);
+	    this.textContent = '';
 	};
 	/*OOP herency*/
-	TextShape.prototype = Object.create( Shape.prototype );
+	TextShape.prototype = Object.create(Shape.prototype);
 	TextShape.prototype.contructor = TextShape;
 	/*OOP herency*/
+	TextShape.prototype.buildDom = function() {
+	    if (this.elementName && !this.domElement)
+	      this.domElement = document.createElement(this.elementName);
 	
-	TextShape.prototype.buildDom = function(){
-	
-	  if( this.elementName && !this.domElement )
-	    this.domElement = document.createElement( this.elementName );
-	
-	  this.domElement.innerHTML = this.textContent;
-	
-	  if( this.id )
-	    this.domElement.id = this.id;
-	
-	  if( this.classes )
-	    this.domElement.className += ' ' + this.classes;
-	
-	
-	};
-	
-	//t is a string with the text for the textShape
-	TextShape.prototype.updateText = function( textContent ){
-	
-	    this.needsReRender = true;
-	
-	    if( typeof textContent !== 'string' )
-	      throw ': argument of updateText should be a string literal';
-	
-	    this.textContent = textContent;
-	
-	};
-	
-	TextShape.prototype.render_ = function(){
-	
-	  if( this.textContent )
 	    this.domElement.innerHTML = this.textContent;
 	
+	    this.buildId();
+	    this.buildClasses();
+	    this.buildAttributes();
+	    this.buildEvents();
+	    this.buildChilds();
+	
 	};
 	
-	
+	TextShape.prototype.updateText = function(textContent, method = "replace") {
+	    this.needsRender = true;
+	    if (typeof textContent !== 'string') {
+	        console.error(': first argument of updateText should be a string literal');
+	    }
+	    switch (method) {
+	        case "replace":
+	            this.textContent = textContent;
+	            break;
+	        case "append":
+	            this.textContent = this.textContent + textContent;
+	            break;
+	        case "prepend":
+	            this.textContent = textContent + this.textContent;
+	            break;
+	        default:
+	            console.error(': method of updateText invalid, valid methods : [default] "replace","append","prepend"');
+	    }
+	};
+	TextShape.prototype.render_ = function() {
+	    if (this.textContent) this.domElement.innerHTML = this.textContent;
+	};
 	module.exports = TextShape;
 
 
@@ -707,11 +686,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if( this.elementName && !this.domElement )
 	    this.domElement = document.createElement( this.elementName );
 	
-	  if( this.id )
-	    this.domElement.id = this.id;
-	
-	  if( this.classes )
-	    this.domElement.className += ' ' + this.classes;
+	  this.buildId();
+	  this.buildClasses();
 	
 	  if( this.action )
 	    this.domElement.action = this.action;
@@ -723,31 +699,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.domElement.enctype = this.encoding;
 	
 	  if( !this.submitTrigger ){
-	    throw 'You need a submit trigger for a form';
+	    console.error('You need a submit trigger for a form');
 	  }
-	
 	
 	  if(this.submitTrigger)
 	    this.appendShape( this.submitTrigger );
 	
-	  for (var i = 0; i < this.childs.length; i++) {
-	
-	    if( !this.childs[i].domElement ){
-	      this.childs[i].buildDom();
-	    }
-	
-	    this.domElement.appendChild( this.childs[i].domElement );
-	
-	  }
+	  this.buildChilds();
 	
 	  //make submitTrigger button visible or invisible according to the flag setted at creation
 	  if( !this.submitTrigger.visible )
 	    this.submitTrigger.domElement.style.visibility = "hidden";
 	
-	  for( var ev in this.eventAndCallback ){
-	    this.domElement.addEventListener( ev, this.eventAndCallback[ev] );
-	  }
-	
+	  this.buildAttributes();
+	  this.buildEvents();
+	  
 	};
 	
 	
@@ -780,7 +746,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    console.log( this.childs );
 	
 	  }else{
-	    throw 'The argument should be a Shape object';
+	    console.error('The argument should be a Shape object');
 	  }
 	
 	};
@@ -788,7 +754,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	FormShape.prototype.setSubmitTrigger = function( text ){
 	  //un trigger puede ser un boton, como puede ser un TECLA
 	  if( typeof text !== 'string' )
-	    throw 'Argument should be a string containing text of submit button, if no text submit will be not visible';
+	    console.error('Argument should be a string containing text of submit button, if no text submit will be not visible');
 	
 	  var st;
 	  if ( text !== '' ) {

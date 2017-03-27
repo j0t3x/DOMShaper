@@ -52,34 +52,43 @@ Shape.prototype.buildDom = function(){
   if( this.elementName && !this.domElement )
     this.domElement = document.createElement( this.elementName );
 
+    this.buildId();
+    this.buildClasses();
+    this.buildAttributes();
+    this.buildEvents();
+    this.buildChilds();
+
+};
+
+Shape.prototype.buildId = function(){
   if( this.id )
     this.domElement.id = this.id;
+};
 
+Shape.prototype.buildClasses = function(){
   if( this.classes )
     this.domElement.className += ' ' + this.classes;
+};
 
+Shape.prototype.buildAttributes = function(){
   for( var attr in this.attributes){
     this.domElement.setAttribute(attr,this.attributes[attr]);
   }
+};
 
+Shape.prototype.buildEvents = function(){
+  for( var ev in this.eventAndCallback ){
+    this.domElement.addEventListener( ev, this.eventAndCallback[ev] );
+  }
+};
+
+Shape.prototype.buildChilds = function(){
   for (var i = 0; i < this.childs.length; i++) {
-
     if( !this.childs[i].domElement ){
       this.childs[i].buildDom();
     }
-
-
     this.domElement.appendChild( this.childs[i].domElement );
-
   }
-
-  for( var ev in this.eventAndCallback ){
-
-    this.domElement.addEventListener( ev, this.eventAndCallback[ev] );
-
-  }
-
-
 };
 
 Shape.prototype.render = function(){

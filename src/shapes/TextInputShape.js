@@ -18,18 +18,11 @@ TextInputShape.prototype.buildDom = function(){
   this.domElement.type = 'text';
   this.domElement.value = this.textContent;
 
-  if( this.id )
-    this.domElement.id = this.id;
-
-  if( this.classes )
-    this.domElement.className += ' ' + this.classes;
-
-  if( this.name )
-      this.domElement.setAttribute('name', this.name);
-
-  for( var attr in this.attributes){
-    this.domElement.setAttribute(attr,this.attributes[attr]);
-  }
+  this.buildId();
+  this.buildClasses();
+  this.buildAttributes();
+  this.buildEvents();
+  //this.buildChilds();
 
 };
 
@@ -41,32 +34,19 @@ TextInputShape.prototype.getVal = function(){
     return this.domElement.value;
 };
 
-//t is a string with the text for the TextInputShape
+
 TextInputShape.prototype.setValue = function( value ){
     if( typeof value !== 'string' )
       console.error(': argument of updateText should be a string literal');
 
     this.textContent = value;
+    this.needsRender = true;
 };
 
 TextInputShape.prototype.render_ = function(){
 
   if( this.textContent )
     this.domElement.value = this.textContent;
-
-};
-
-TextInputShape.prototype.setName = function(){
-
-  //you can set several classes like this 'clas1 class2 class3'
-
-  for ( var i = 0; i < arguments.length ; i++ ) {
-
-    if( typeof arguments[i] !== 'string' )
-      console.error(': Name should be a string literal');
-
-    this.name = arguments[i];
-  }
 
 };
 

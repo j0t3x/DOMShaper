@@ -23,11 +23,8 @@ FormShape.prototype.buildDom = function(){
   if( this.elementName && !this.domElement )
     this.domElement = document.createElement( this.elementName );
 
-  if( this.id )
-    this.domElement.id = this.id;
-
-  if( this.classes )
-    this.domElement.className += ' ' + this.classes;
+  this.buildId();
+  this.buildClasses();
 
   if( this.action )
     this.domElement.action = this.action;
@@ -42,28 +39,18 @@ FormShape.prototype.buildDom = function(){
     console.error('You need a submit trigger for a form');
   }
 
-
   if(this.submitTrigger)
     this.appendShape( this.submitTrigger );
 
-  for (var i = 0; i < this.childs.length; i++) {
-
-    if( !this.childs[i].domElement ){
-      this.childs[i].buildDom();
-    }
-
-    this.domElement.appendChild( this.childs[i].domElement );
-
-  }
+  this.buildChilds();
 
   //make submitTrigger button visible or invisible according to the flag setted at creation
   if( !this.submitTrigger.visible )
     this.submitTrigger.domElement.style.visibility = "hidden";
 
-  for( var ev in this.eventAndCallback ){
-    this.domElement.addEventListener( ev, this.eventAndCallback[ev] );
-  }
-
+  this.buildAttributes();
+  this.buildEvents();
+  
 };
 
 

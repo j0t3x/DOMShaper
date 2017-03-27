@@ -14,24 +14,13 @@ ButtonShape.prototype.buildDom = function(){
   if( this.elementName && !this.domElement )
     this.domElement = document.createElement( this.elementName );
 
+  this.buildId();
+  this.buildClasses();
+  this.buildAttributes();
+  this.buildEvents();
+  //this.buildChilds();
+
   this.domElement.innerHTML = this.textContent;
-
-  if( this.id )
-    this.domElement.id = this.id;
-
-  if( this.classes )
-    this.domElement.className += ' ' + this.classes;
-
-  for( var attr in this.attributes ){
-    this.domElement.setAttribute(attr,this.attributes[attr]);
-  }
-
-  for( var ev in this.eventAndCallback ){
-
-    this.domElement.addEventListener( ev, this.eventAndCallback[ev] );
-
-  }
-
 
 };
 
@@ -41,6 +30,7 @@ ButtonShape.prototype.updateText = function( text ){
       console.error(': argument of updateText should be a string literal');
 
     this.textContent = text;
+    this.needsRender = true;
 };
 
 ButtonShape.prototype.render_ = function(){

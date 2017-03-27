@@ -8,20 +8,24 @@ TextShape.prototype = Object.create(Shape.prototype);
 TextShape.prototype.contructor = TextShape;
 /*OOP herency*/
 TextShape.prototype.buildDom = function() {
-    if (this.elementName && !this.domElement) this.domElement = document.createElement(this.elementName);
+    if (this.elementName && !this.domElement)
+      this.domElement = document.createElement(this.elementName);
+
     this.domElement.innerHTML = this.textContent;
-    if (this.id) this.domElement.id = this.id;
-    if (this.classes) this.domElement.className += ' ' + this.classes;
-    for (var i = 0; i < this.childs.length; i++) {
-        if (!this.childs[i].domElement) {
-            this.childs[i].buildDom();
-        }
-        this.domElement.appendChild(this.childs[i].domElement);
-    }
+
+    this.buildId();
+    this.buildClasses();
+    this.buildAttributes();
+    this.buildEvents();
+    this.buildChilds();
+
 };
-//t is a string with the text for the textShape
-TextShape.prototype.updateText = function(textContent, method = "replace") {
-    this.needsReRender = true;
+
+TextShape.prototype.updateText = function(textContent, method) {
+    this.needsRender = true;
+    if( !method )
+      method = "replace";
+
     if (typeof textContent !== 'string') {
         console.error(': first argument of updateText should be a string literal');
     }
