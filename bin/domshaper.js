@@ -144,7 +144,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Shape.prototype.buildClasses = function(){
 	  if( this.classes )
-	    this.domElement.className += ' ' + this.classes;
+	    this.domElement.className += this.classes;
 	};
 	
 	Shape.prototype.buildAttributes = function(){
@@ -248,7 +248,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if( typeof arguments[i] !== 'string' )
 	      console.error(': className should be a string literal');
 	
-	    this.classes += ( ' ' + arguments[i] );
+	    this.classes += ( arguments[i] +  ' ' );
 	  }
 	  //this.classes = classes;
 	
@@ -632,8 +632,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	};
 	
-	TextShape.prototype.updateText = function(textContent, method = "replace") {
+	TextShape.prototype.updateText = function(textContent, method) {
 	    this.needsRender = true;
+	    if( !method )
+	      method = "replace";
+	
 	    if (typeof textContent !== 'string') {
 	        console.error(': first argument of updateText should be a string literal');
 	    }

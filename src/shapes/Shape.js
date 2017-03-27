@@ -67,7 +67,7 @@ Shape.prototype.buildId = function(){
 
 Shape.prototype.buildClasses = function(){
   if( this.classes )
-    this.domElement.className += ' ' + this.classes;
+    this.domElement.className += this.classes;
 };
 
 Shape.prototype.buildAttributes = function(){
@@ -171,7 +171,7 @@ Shape.prototype.setClass = function(){
     if( typeof arguments[i] !== 'string' )
       console.error(': className should be a string literal');
 
-    this.classes += ( ' ' + arguments[i] );
+    this.classes += ( arguments[i] +  ' ' );
   }
   //this.classes = classes;
 
