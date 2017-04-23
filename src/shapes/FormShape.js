@@ -50,7 +50,7 @@ FormShape.prototype.buildDom = function(){
 
   this.buildAttributes();
   this.buildEvents();
-  
+
 };
 
 

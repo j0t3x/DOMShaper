@@ -67,7 +67,7 @@ Shape.prototype.buildId = function(){
 
 Shape.prototype.buildClasses = function(){
   if( this.classes )
-    this.domElement.className += this.classes;
+    this.domElement.className = this.classes;
 };
 
 Shape.prototype.buildAttributes = function(){
@@ -184,9 +184,6 @@ Shape.prototype.setId = function( id ){
     console.error(': id should be a string literal');
 
   this.id = id;
-
-  if( this.id )
-    this.domElement.id = this.id;
 
 };
 
