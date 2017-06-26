@@ -26,6 +26,12 @@ form.setSubmitTrigger("enviar").setClass('btn btn-primary');
 
 var d = new ds.Shape( document.getElementsByTagName("body")[0] );
 
+
+form.on('submit', function( ev ){
+  ev.preventDefault();
+  console.log('wawa');
+}.bind(this));
+
 d.appendShape(form);
 
 d.buildDom();

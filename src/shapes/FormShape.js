@@ -88,23 +88,28 @@ FormShape.prototype.addSection = function( childSection ){
 
 };
 
-FormShape.prototype.setSubmitTrigger = function( text ){
+FormShape.prototype.setSubmitTrigger = function( trigger ){
   //un trigger puede ser un boton, como puede ser un TECLA
-  if( typeof text !== 'string' )
-    console.error('Argument should be a string containing text of submit button, if no text submit will be not visible');
+  if( typeof trigger === 'string' ){
 
-  var st;
-  if ( text !== '' ) {
-    st = new ButtonShape( text );
-    //lets set a flag in this object to account for ti later on buildDom
+    if ( trigger !== '' ) {
+      this.submitTrigger = new ButtonShape( trigger );
+      //lets set a flag in this object to account for ti later on buildDom
+      st.visible = true;
+    }else{
+      this.submitTrigger = new ButtonShape('');
+    }
+
+  }else if ( trigger instanceof Shape ) {
+
     st.visible = true;
-  }else{
-    st = new ButtonShape('');
+    this.submitTrigger = trigger;
+
+  }else {
+    console.error('Argument should be a string containing text of submit button, if no text submit will be not visible');
   }
 
-  this.submitTrigger = st;
-
-  return st;
+  return this.submitTrigger;
 };
 
 FormShape.prototype.sendData = function( evt ){
