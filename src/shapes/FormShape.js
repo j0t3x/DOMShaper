@@ -102,8 +102,8 @@ FormShape.prototype.setSubmitTrigger = function( trigger ){
 
   }else if ( trigger instanceof Shape ) {
 
-    st.visible = true;
     this.submitTrigger = trigger;
+    this.submitTrigger.visible = true;
 
   }else {
     console.error('Argument should be a string containing text of submit button, if no text submit will be not visible');
