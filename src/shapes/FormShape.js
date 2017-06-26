@@ -95,7 +95,7 @@ FormShape.prototype.setSubmitTrigger = function( trigger ){
     if ( trigger !== '' ) {
       this.submitTrigger = new ButtonShape( trigger );
       //lets set a flag in this object to account for ti later on buildDom
-      st.visible = true;
+      this.submitTrigger.visible = true;
     }else{
       this.submitTrigger = new ButtonShape('');
     }
